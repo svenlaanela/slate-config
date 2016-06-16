@@ -1,3 +1,98 @@
+// Configuration file for slate (https://github.com/jigish/slate)
+// 
+// This configuration file maps the ctrl,alt,cmd,shift+key (i.e. hyper+key) combination to opening a 
+// specific app. The application will gain focus if it is not currently focused (and will be started
+// in the background if not running). Clicking the same key combination again will return focus to 
+// the application that had focus previously.
+//
+// Pressing the ctrl,alt,cmd,shift keys at the same time is rather cumbersome. However, the caps lock
+// key (which I personally do not use) can be mapped to that specific key combination so you could just
+// press capslock+key to achieve the same. This remapping can be done by following the instructions here:
+// http://stevelosh.com/blog/2012/10/a-modern-space-cadet/#hyper
+slate.config("orderScreensLeftToRight", true);
+
+var moveToScreen1 = slate.operation("move", {
+  "screen": "0",
+  "x": "screenOriginX",
+  "y": "screenOriginY",
+  "width": "screenSizeX",
+  "height": "screenSizeY"
+});
+
+var moveToScreen2 = slate.operation("move", {
+  "screen": "1",
+  "x": "screenOriginX",
+  "y": "screenOriginY",
+  "width": "screenSizeX",
+  "height": "screenSizeY"
+});
+
+var moveToScreen3 = slate.operation("move", {
+  "screen": "2",
+  "x": "screenOriginX",
+  "y": "screenOriginY",
+  "width": "screenSizeX",
+  "height": "screenSizeY"
+});
+
+slate.layout("1monitors", {
+  "Google Chrome": {
+    "operations": [moveToScreen1],
+    "repeat": true
+  },
+  "Sublime Text": {
+    "operations": [moveToScreen1],
+    "repeat": true
+  },
+  "IntelliJ IDEA CE": {
+    "operations": [moveToScreen1],
+    "repeat": true
+  }
+});
+
+slate.layout("2monitors", {
+  "Google Chrome": {
+    "operations": [moveToScreen1],
+    "repeat": true
+  },
+  "Sublime Text": {
+    "operations": [moveToScreen2],
+    "repeat": true
+  },
+  "IntelliJ IDEA CE": {
+    "operations": [moveToScreen2],
+    "repeat": true
+  }
+});
+
+slate.layout("3monitors", {
+  "Google Chrome": {
+    "operations": [moveToScreen2],
+    "repeat": true
+  },
+  "Sublime Text": {
+    "operations": [moveToScreen3],
+    "repeat": true
+  },
+  "IntelliJ IDEA CE": {
+    "operations": [moveToScreen3],
+    "repeat": true
+  }
+});
+
+slate.def(["2560x1600"], "1monitors");
+slate.def(["2560x1600","1920x1200"], "2monitors");
+slate.def(["2560x1600","1920x1200","1920x1200"], "3monitors");
+
+// for debugging
+//slate.bind("1:ctrl,alt,cmd,shift", slate.operation("move", {"name": "1monitors"}))
+//slate.bind("2:ctrl,alt,cmd,shift", slate.operation("move", {"name": "2monitors"}))
+//slate.bind("3:ctrl,alt,cmd,shift", slate.operation("move", {"name": "3monitors"}))
+
+slate.bind("1:ctrl,alt,cmd,shift", moveToScreen1)
+slate.bind("2:ctrl,alt,cmd,shift", moveToScreen2)
+slate.bind("3:ctrl,alt,cmd,shift", moveToScreen3)
+
 /**
  * Maps application names to application executables.
  * This map is used to move back to the previously focused application.
